@@ -13,7 +13,7 @@ version="$2" # Should be just numbers, like 0.0.45
 
 # Make sure that the arguments are populated, if not, throw an error
 if [[ $1 == "" || $2 == "" ]]; then
-        echo "Error: Unassigned arguments. First should be server link download, and second should be ve>
+        echo "Error: Unassigned arguments. First should be server link download, and second should be version number using just numbers."
         echo "Example Syntax: ./server_updater.sh https://server_link.com/ 0.0.45"
         exit 1
 fi
@@ -26,26 +26,33 @@ if [ -e "server_old/" ]; then
         exit 1
 fi
 
-cp server/ server_old/
-
+cp server/ server_old/ -r
+rm server/ -r
 
 # Download new server files from the provided link and rename them new_server.zip
 echo "Downloading new server files from: $new_server_link"
-wget -o new_server.zip $new_server_link
+wget $new_server_link
 
 # Unzip the server files and rename the unzipped folder to server
-unzip new_server.zip
-mv Server-Files-$version/ server/
-cd server/
+unzip ~/Server-Files-$version.zip
+mv ~/Server-Files-$version/ ~/server/
+echo "version is Server-Files-$version"
+cd ~/server/
 
 # Delete duplicate files: user_jvm_args.txt, defaultconfigs/ftbessentials-server.snbt)
-rm user_jvm_args.txt
-rm defaultconfigs/ftbessentials-server.snbt
+rm ~/server/user_jvm_args.txt
+rm ~/server/defaultconfigs/ftbessentials-server.snbt
 
 # Move deleted files over, as well as other required ones
-cp ~/server_old/user_jvm_args.txt .
-cp ~/server_old/defaultconfigs/ftbessentials-server.snbt ./defaultconfigs/
-cp ~/server_old/eula.txt .
-cp ~/server_old/ops.json .
-cp ~/server_old/server.properties .
-cp ~/server_old/world/ .
+cp ~/server_old/user_jvm_args.txt ~/server/
+cp ~/server_old/defaultconfigs/ftbessentials-server.snbt ~/server/defaultconfigs/
+cp ~/server_old/eula.txt ~/server/
+cp ~/server_old/ops.json ~/server/
+cp ~/server_old/server.properties ~/server/
+cp ~/server_old/world/ ~/server/ -r
+
+# Change the server to include the newest version
+sed -i "/motd/c\motd=Jays ATM9 Server v$version" ~/server/server.properties
+
+#change permissions to run start script
+chmod +x ~/server/startserver.sh
