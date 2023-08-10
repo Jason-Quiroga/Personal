@@ -35,8 +35,8 @@ wget $new_server_link
 
 # Unzip the server files and rename the unzipped folder to server
 unzip ~/Server-Files-$version.zip
+rm ~/Server-Files-$version.zip
 mv ~/Server-Files-$version/ ~/server/
-echo "version is Server-Files-$version"
 cd ~/server/
 
 # Delete duplicate files: user_jvm_args.txt, defaultconfigs/ftbessentials-server.snbt)
@@ -54,5 +54,9 @@ cp ~/server_old/world/ ~/server/ -r
 # Change the server to include the newest version
 sed -i "/motd/c\motd=Jays ATM9 Server v$version" ~/server/server.properties
 
-#change permissions to run start script
+# Change permissions to run start script
 chmod +x ~/server/startserver.sh
+
+# Run the server
+~/start.sh
+screen -r
