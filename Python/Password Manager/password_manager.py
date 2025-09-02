@@ -277,8 +277,9 @@ class PasswordManagerGUI:  # Class that handles the GUI for the password manager
             messagebox.showerror("Error", "Platform, Username, and Password are Required!")
 
     def delete_entry(self):
-        selected_item = self.tree.selection()[0]
-        if not selected_item:
+        try:
+            selected_item = self.tree.selection()[0]
+        except:
             messagebox.showwarning("Warning", "Please select an entry to delete.")
             return
 
@@ -296,17 +297,29 @@ class PasswordManagerGUI:  # Class that handles the GUI for the password manager
         pass
 
     def copy_url_to_clipboard(self):
-        selected_item = self.tree.selection()[0]
+        try:
+            selected_item = self.tree.selection()[0]
+        except:
+            messagebox.showwarning("Warning", "Please select an entry to copy the field.")
+            return
         platform = self.tree.item(selected_item, "values")[0]
         pyperclip.copy(platform)
 
     def copy_username_to_clipboard(self):
-        selected_item = self.tree.selection()[0]
+        try:
+            selected_item = self.tree.selection()[0]
+        except:
+            messagebox.showwarning("Warning", "Please select an entry to copy the field.")
+            return
         username = self.tree.item(selected_item, "values")[1]
         pyperclip.copy(username)
 
     def copy_password_to_clipboard(self):
-        selected_item = self.tree.selection()[0]
+        try:
+            selected_item = self.tree.selection()[0]
+        except:
+            messagebox.showwarning("Warning", "Please select an entry to copy the field.")
+            return
         platform, username, _, _ = self.tree.item(selected_item, 'values')
         decrypted_password = self.decrypted_passwords[(platform, username)]
         pyperclip.copy(decrypted_password)
@@ -314,8 +327,7 @@ class PasswordManagerGUI:  # Class that handles the GUI for the password manager
     def ssh_to_client(self):
         try:
             selected_item = self.tree.selection()[0]
-        except Exception as e:
-            print(e)
+        except:
             messagebox.showwarning("Warning", "Please select an entry to SSH to.")
             return
 
