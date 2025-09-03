@@ -21,7 +21,7 @@ A collection of personal and educational scripts and utilities to explore progra
 
 ---
 ### **Password Manager**
-**A minimalistic password manager that allows credential generation, secure storage, and retrieval, emphasizing safe storage practices.**
+**A minimalistic password manager that allows secure storage and retrieval of credentials, emphasizing safe storage practices.**
 
 <img width="402" height="275" alt="image" src="https://github.com/user-attachments/assets/e2218bb6-4de2-4e62-a6ce-812d720efdc8" />
 
